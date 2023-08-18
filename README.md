@@ -32,7 +32,7 @@
 <h4 name="descripcion"> Descripción </h4>
 <p> API Rest sencilla que contiene los endpoints necesarios para hacer peticiones HTTP (POST, GET, PUT, DELETE).
     Contiene una CRUD básica que fue hecha en Java 17 con el FrameWork de Spring Boot 3, Spring Security para configuraciones de seguridad.
-    Asi como la autenticacion en tokens con ayuda de la libreria JWTToken </p>
+    Asi como la autenticacion en tokens con ayuda de la libreria JWTToken. Tambien se utilizo la aplicación de Insomnia para el testeo de los diferentes EndPoints del API. </p>
 
 <h2 name="funcionalidades-del-proyecto"> :hammer:Funcionalidades del proyecto </h2>
 
