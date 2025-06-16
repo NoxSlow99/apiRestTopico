@@ -1,0 +1,23 @@
+server:
+  port: 8080
+
+security:
+  jwt:
+    private-key: 95566a6465b3c07ecbcb618616f9fe1d22bdc867
+    user-generator: development
+
+spring:
+  application:
+    name: user-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/topics_db_dev
+    username: development
+    password: 123456
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect

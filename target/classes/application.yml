@@ -1,0 +1,18 @@
+#spring.datasource.url=jdbc:mysql://localhost/topic_api
+#spring.datasource.username=root
+#spring.datasource.password=root
+#
+#server.error.include-stacktrace=never
+#
+#api.security.secret = ${JWT_SECRET:123456}
+
+security:
+  jwt:
+    private-key: 95566a6465b3c07ecbcb618616f9fe1d22bdc867
+    user-generator: prueba
+
+spring:
+  datasource:
+    url:
+    username:
+    password:

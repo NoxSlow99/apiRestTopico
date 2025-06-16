@@ -1,0 +1,22 @@
+services:
+  postgres-dev:
+    image: postgres:latest
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_DB: topics_db_dev
+      POSTGRES_USER: development
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata_dev:/var/lib/postgresql/data
+    networks:
+      - topics-network
+
+volumes:
+  pgdata_dev:
+
+networks:
+  topics-network:
+    driver: bridge
