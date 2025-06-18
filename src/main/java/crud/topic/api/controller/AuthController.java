@@ -1,7 +1,9 @@
 package crud.topic.api.controller;
 
 import crud.topic.api.dto.request.AuthCreateUserRequest;
+import crud.topic.api.dto.request.AuthLoginRequest;
 import crud.topic.api.dto.response.AuthResponse;
+import crud.topic.api.dto.response.LoginResponse;
 import crud.topic.api.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +29,10 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login() {
-        return null;
+    public ResponseEntity<LoginResponse> login(@RequestBody @Valid AuthLoginRequest authLoginRequest) {
+        return new ResponseEntity<>(
+                this.authService.login(authLoginRequest),
+                HttpStatus.OK
+        );
     }
 }

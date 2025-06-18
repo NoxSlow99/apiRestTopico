@@ -52,12 +52,12 @@ public class JwtUtils {
 
             return verifier.verify(token);
         } catch (JWTVerificationException exception) {
-            throw new JWTVerificationException("Token invalid, not Authorized");
+            throw new JWTVerificationException("Token invalid: " + exception.getMessage());
         }
     }
 
-    public String extractUsername(DecodedJWT decodedJWT){
-        return decodedJWT.getSubject().toString();
+    public String extractUsername(DecodedJWT decodedJWT) {
+        return decodedJWT.getSubject();
     }
 
     public Claim getSpecificClaim(DecodedJWT decodedJWT, String claimName) {

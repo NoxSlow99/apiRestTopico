@@ -1,7 +1,7 @@
 package crud.topic.api.dto.response;
 
 public record LoginResponse(
-        String email,
+        String credential,
         Boolean status,
         Boolean isEnabled,
         String token

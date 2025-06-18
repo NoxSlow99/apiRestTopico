@@ -3,6 +3,8 @@ package crud.topic.api.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -19,4 +21,10 @@ public class CursoEntity {
     private String nombre;
 
     private String descripcion;
+
+    @Column(name = "created_at")
+    private LocalDateTime fechaCreacion;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }

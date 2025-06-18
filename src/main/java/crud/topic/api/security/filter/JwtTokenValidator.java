@@ -29,6 +29,39 @@ public class JwtTokenValidator extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
         String jwtToken = request.getHeader(HttpHeaders.AUTHORIZATION);
 
+        if (jwtToken != null) {
+            jwtToken = jwtToken.substring(7);
+
+            DecodedJWT decodedJWT;
+
+            try {
+                decodedJWT = jwtUtils.validateToken(jwtToken);
+            } catch (Exception e) {
+                sendErrorResponse(response, HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
+                return;
+            }
+
+            String username = jwtUtils.extractUsername(decodedJWT);
+            String stringAuthorities = jwtUtils.getSpecificClaim(decodedJWT, "authorities").asString();
+
+            Collection<? extends GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(stringAuthorities);
+
+            SecurityContext context = SecurityContextHolder.createEmptyContext();
+            Authentication authenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
+            context.setAuthentication(authenticationToken);
+            SecurityContextHolder.setContext(context);
+
+        }
+        filterChain.doFilter(request, response);
+    }
+
+
+    /*@Override
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
+        String jwtToken = request.getHeader(HttpHeaders.AUTHORIZATION);
+
         if (jwtToken == null || !jwtToken.startsWith("Bearer ")) {
             this.sendErrorResponse(response, HttpServletResponse.SC_UNAUTHORIZED, "Missing or invalid Authorization header");
             return;
@@ -56,7 +89,7 @@ public class JwtTokenValidator extends OncePerRequestFilter {
 
 
         filterChain.doFilter(request, response);
-    }
+    } */
 
     private void sendErrorResponse(HttpServletResponse response, int status, String message) throws IOException {
         response.setStatus(status);

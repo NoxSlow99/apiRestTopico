@@ -34,7 +34,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
 
-    public AuthResponse create (AuthCreateUserRequest authCreateUser) {
+    public AuthResponse create(AuthCreateUserRequest authCreateUser) {
         String email = authCreateUser.email();
         String username = authCreateUser.username();
         String password = authCreateUser.password();
@@ -65,7 +65,7 @@ public class AuthService {
         ArrayList<SimpleGrantedAuthority> authorities = new ArrayList<>();
         userSaved.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority("ROLE_".concat(role.getRoleEnum().name()))));
 
-        Authentication authentication = new UsernamePasswordAuthenticationToken(userSaved, null, authorities);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userSaved.getEmail(), null, authorities);
 
         String accessToken = jwtUtils.createToken(authentication);
 
@@ -77,7 +77,7 @@ public class AuthService {
         );
     }
 
-    public LoginResponse login (AuthLoginRequest loginRequest) {
+    public LoginResponse login(AuthLoginRequest loginRequest) {
         String emailOrUsername = loginRequest.emailOrUsername();
         String password = loginRequest.password();
 

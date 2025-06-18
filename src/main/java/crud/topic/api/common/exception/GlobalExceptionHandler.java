@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.nio.file.AccessDeniedException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -36,7 +37,24 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ConflictException.class)
     public ResponseEntity<Object> handleConflictException(ConflictException exception) {
         return new ResponseEntity<>(
-                errorDetails(exception.getMessage(), HttpStatus.CONFLICT, timestamp()), HttpStatus.CONFLICT
+                errorDetails(exception.getMessage(), HttpStatus.CONFLICT, timestamp()),
+                HttpStatus.CONFLICT
+        );
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException exception) {
+        return new ResponseEntity<>(
+                errorDetails(exception.getMessage(), HttpStatus.BAD_REQUEST, timestamp()),
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Object> handleAccessDeniedException(AccessDeniedException exception) {
+        return new ResponseEntity<>(
+                errorDetails(exception.getMessage(), HttpStatus.UNAUTHORIZED, timestamp()),
+                HttpStatus.UNAUTHORIZED
         );
     }
 
@@ -62,7 +80,7 @@ public class GlobalExceptionHandler {
         return dateFormat.format(new Date());
     }
 
-    private Map<String, Object> errorDetails (String message, HttpStatus status, String timestamp) {
+    private Map<String, Object> errorDetails(String message, HttpStatus status, String timestamp) {
         Map<String, Object> errors = new HashMap<>();
         errors.put("message", message);
         errors.put("status", status.value());

@@ -3,7 +3,7 @@ package crud.topic.api.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Table(name = "topics")
@@ -23,9 +23,11 @@ public class TopicoEntity {
     @Column(unique = true, nullable = false)
     private String mensaje;
     @Column(name = "fecha_creacion", nullable = false)
-    private Date fechaCreacion;
+    private LocalDateTime fechaCreacion;
     @Column(nullable = false)
     private Boolean estatus;
+    @Column(name = "updated_at")
+    private LocalDateTime fechaModificacion;
 
     @ManyToOne
     @JoinColumn(name = "autor_id", nullable = false)

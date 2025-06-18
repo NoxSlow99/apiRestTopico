@@ -6,7 +6,7 @@ import lombok.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "votos", uniqueConstraints = {
+@Table(name = "votes", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"usuario_id", "topico_id"})
 })
 @Getter
